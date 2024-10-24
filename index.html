@@ -3,3 +3,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 130vh; /* Full viewport height */
+        }
+        body {
+            background-color: rgba(185, 154, 90, 0.575);
+            width: 100%;
+            height: 100%;
+        }
+        .score {
+            margin: 20px 0;
+            font-size: 1.2rem;
+            visibility: hidden;
+        }
+        
+        button {
+            padding: 50px 70px;
+            font-size: 16px;
+            margin: 5%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #af874c;
+            color: rgb(255, 174, 0)
+        }
+        .game-button {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <button onclick= function(){this.choice = "rock";}>Rock Lee !</button>
+    <button onclick="">Paper Mario</button>
+    <button onclick="">Gwen is immune</button> -->
+    <!-- <button id="solo" onclick= "
+                this.remove();
+                document.getElementById('multi').remove();
+                soloGameStart();
+                ">Solo</button> -->
+    <!-- object.onclick = function(){myScript}; -->
+     <div class = "flex-center">
+        <button id = "solo" onclick = removeButtons();>Solo</button>
+        <button id = "multi" onclick = removeButtons();>Multiplayer online</button>
+        <button class = "game-button" id = "rock" onclick = "makeMove('rock')">✊</button>
+        <button class = "game-button" id = "paper" onclick = "makeMove('paper')";>✋</button>
+        <button class = "game-button" id = "scissors" onclick = "makeMove('scissors')";>✌️</button>
+        <div class="score">
+        <span id="playerScore">0</span> - <span id="computerScore">0</span>
+        </div>
+    </div>
+    
+    <script>
+        let playerScore = 0
+        let oppScore = 0
+
+        function startSoloGame() {
+            
+        }
+        
+        function startMultiGame() {
+            
+        }
+        function makeMove(choice) {
+            if(choice == getComputerChoice()){
+                return('draw')
+            }
+            if (
+                (choice === 'rock' && computerChoice === 'scissors') ||
+                (choice === 'paper' && computerChoice === 'rock') ||
+                (choice === 'scissors' && computerChoice === 'paper')
+            ) {
+                return 'player';
+            }
+            return 'computer';
+        }
+        function getComputerChoice() {
+            const choices = ['rock', 'paper', 'scissors'];
+            const randomIndex = Math.floor(Math.random() * 3);
+            return choices[randomIndex];
+        }
+
+        function removeButtons() {
+            document.getElementById('solo').remove();
+            document.getElementById('multi').remove();
+            document.getElementById('playerScore').style.visibility = "visible";
+            document.getElementById('computerScore').style.visibility = "visible";
+            for(let i = 0; i < document.getElementsByClassName('game-button').length; i++) {
+                document.getElementsByClassName('game-button')[i].style.display = "flex";
+            }
+        }
+
+    </script>
+</body>
