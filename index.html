@@ -8,23 +8,28 @@
             margin: 0;
             padding: 0;
         }
+    
         .flex-center {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 130vh; /* Full viewport height */
+            height: 100vh; /* Full viewport height */
         }
         body {
             background-color: rgba(185, 154, 90, 0.575);
             width: 100%;
             height: 100%;
+            overflow: hidden;
+            
         }
         .score {
-            margin: 20px 0;
-            font-size: 1.2rem;
-            visibility: hidden;
+            font-size: 230px; /* Big font size for the score */
+            text-align: center; /* Center the text */
+            padding: 20px; /* Padding for spacing */ /* Light background color */
+            position: absolute;
+            margin-top: 550px; /* Pushes the score to the bottom */
+            display: none;
         }
-        
         button {
             padding: 50px 70px;
             font-size: 16px;
@@ -34,7 +39,11 @@
             cursor: pointer;
             transition: all 0.3s ease;
             background-color: #af874c;
-            color: rgb(255, 174, 0)
+            color: rgb(255, 174, 0);
+            overflow: hidden;
+            font-size: 30px;
+            position: relative;
+            top: 60px;
         }
         .game-button {
             display: none;
@@ -53,14 +62,14 @@
                 ">Solo</button> -->
     <!-- object.onclick = function(){myScript}; -->
      <div class = "flex-center">
-        <button id = "solo" onclick = removeButtons();>Solo</button>
-        <button id = "multi" onclick = removeButtons();>Multiplayer online</button>
-        <button class = "game-button" id = "rock" onclick = "makeMove('rock')">✊</button>
+        <button id = "solo" onclick = removeButtons();>SOLO</button>
+        <button id = "multi" onclick = removeButtons();>MULTIPLAYER</button>
+        <button class = "game-button" id = "rock" onclick = "makeMove('rock')";>✊</button>
         <button class = "game-button" id = "paper" onclick = "makeMove('paper')";>✋</button>
         <button class = "game-button" id = "scissors" onclick = "makeMove('scissors')";>✌️</button>
-        <div class="score">
-        <span id="playerScore">0</span> - <span id="computerScore">0</span>
-        </div>
+        <div class="score" id="playerScore" style="margin-right: 250px">0</div>
+        <div class="score" style="margin-bottom: 50px">-</div>
+        <div class="score" id="cpuScore" style="margin-left: 250px">0</div>
     </div>
     
     <script>
@@ -96,10 +105,11 @@
         function removeButtons() {
             document.getElementById('solo').remove();
             document.getElementById('multi').remove();
-            document.getElementById('playerScore').style.visibility = "visible";
-            document.getElementById('computerScore').style.visibility = "visible";
             for(let i = 0; i < document.getElementsByClassName('game-button').length; i++) {
                 document.getElementsByClassName('game-button')[i].style.display = "flex";
+            }
+            for(i = 0; i < document.getElementsByClassName('score').length; i++) {
+                document.getElementsByClassName('score')[i].style.display = "flex";
             }
         }
 
