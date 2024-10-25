@@ -20,9 +20,11 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            user-select: none;
             
         }
         .score {
+            margin: 10px;
             font-size: 230px; /* Big font size for the score */
             text-align: center; /* Center the text */
             padding: 20px; /* Padding for spacing */ /* Light background color */
@@ -67,14 +69,21 @@
         <button class = "game-button" id = "rock" onclick = "makeMove('rock')";>✊</button>
         <button class = "game-button" id = "paper" onclick = "makeMove('paper')";>✋</button>
         <button class = "game-button" id = "scissors" onclick = "makeMove('scissors')";>✌️</button>
-        <div class="score" id="playerScore" style="margin-right: 250px">0</div>
-        <div class="score" style="margin-bottom: 50px">-</div>
-        <div class="score" id="cpuScore" style="margin-left: 250px">0</div>
+        <div class="score" id="playerScore" style="margin-right: 400px">0</div>
+        <div class="score" style="margin-bottom: 50px"> - </div>
+        <div class="score" id="oppScore" style="margin-left: 400px">0</div>
     </div>
     
     <script>
-        let playerScore = 0
-        let oppScore = 0
+        let playerScore = 0;
+        let oppScore = 0;
+        const   bamb = new Audio ("./sounds/Bamboo.mp3");
+        const   boi = new Audio ("./sounds/BOI.mp3");
+        const   gong = new Audio ("./sounds/gong.mp3");
+        /*function playAudio(".\sounds\Bamboo.mp3") {
+        /*function playAudio(".\sounds\Bamboo.mp3") {
+            new Audio(".\sounds\Bamboo.mp3").play();
+        }*/
 
         function startSoloGame() {
             
@@ -85,16 +94,23 @@
         }
         function makeMove(choice) {
             if(choice == getComputerChoice()){
-                return('draw')
+                return;
             }
             if (
-                (choice === 'rock' && computerChoice === 'scissors') ||
-                (choice === 'paper' && computerChoice === 'rock') ||
-                (choice === 'scissors' && computerChoice === 'paper')
+                (choice === 'rock' && getComputerChoice() === 'scissors') ||
+                (choice === 'paper' && getComputerChoice() === 'rock') ||
+                (choice === 'scissors' && getComputerChoice() === 'paper')
             ) {
-                return 'player';
+                playerScore += 1
+                document.getElementById("playerScore").innerText = playerScore;
+                boi.play();
             }
-            return 'computer';
+            else 
+            {
+                oppScore += 1;
+                document.getElementById("oppScore").innerText = oppScore;
+                bamb.play();
+            }
         }
         function getComputerChoice() {
             const choices = ['rock', 'paper', 'scissors'];
@@ -111,6 +127,7 @@
             for(i = 0; i < document.getElementsByClassName('score').length; i++) {
                 document.getElementsByClassName('score')[i].style.display = "flex";
             }
+            gong.play();
         }
 
     </script>
