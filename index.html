@@ -3,6 +3,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.1/peerjs.min.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -63,14 +65,14 @@
                 soloGameStart();
                 ">Solo</button> -->
     <!-- object.onclick = function(){myScript}; -->
-     <div class = "flex-center">
+     <div id = gamebox class = "flex-center">
         <button id = "solo" onclick = removeButtons();>SOLO</button>
         <button id = "multi" onclick = removeButtons();>MULTIPLAYER</button>
         <button class = "game-button" id = "rock" onclick = "makeMove('rock')";>✊</button>
         <button class = "game-button" id = "paper" onclick = "makeMove('paper')";>✋</button>
         <button class = "game-button" id = "scissors" onclick = "makeMove('scissors')";>✌️</button>
         <div class="score" id="playerScore" style="margin-right: 400px">0</div>
-        <div class="score" style="margin-bottom: 50px"> - </div>
+        <div class="score" id= "dash" style="margin-bottom: 50px"> - </div>
         <div class="score" id="oppScore" style="margin-left: 400px">0</div>
     </div>
     
@@ -82,10 +84,11 @@
         const   gong = new Audio ("./sounds/gong.mp3");
         const   nein = new Audio ("./sounds/nein.mp3");
         const   kabuki = new Audio ("./sounds/kabuki.mp3");
-        /*function playAudio(".\sounds\Bamboo.mp3") {
-        /*function playAudio(".\sounds\Bamboo.mp3") {
-            new Audio(".\sounds\Bamboo.mp3").play();
-        }*/
+        
+        
+        class Player {
+            
+        }
 
         function startSoloGame() {
             
@@ -116,6 +119,7 @@
             }
             if (playerScore == 3)
             {
+                removeGameButtons();
                 kabuki.play();
                 setTimeout(function() {
                 location.reload();
@@ -123,6 +127,7 @@
             }
             else if (oppScore == 3)
             {
+                removeGameButtons();
                 boi.play();
                 setTimeout(function() {
                 location.reload();
@@ -134,17 +139,30 @@
             const randomIndex = Math.floor(Math.random() * 3);
             return choices[randomIndex];
         }
-
+        function appearGameButtons(){
+            for(let i = 0; i < document.getElementsByClassName('game-button').length; i++) {
+                        document.getElementsByClassName('game-button')[i].style.display = "flex";
+                        document.getElementsByClassName('score')[i].style.display = "flex";
+                    }
+        }
+        /*function removeGameButtons(){
+            document.getElementById('dash').remove();
+            document.getElementById('scissors').remove();
+            for(i = 0; i < document.getElementsByClassName('game-button').length; i++) {
+                    document.getElementsByClassName('game-button')[i].remove();
+                    document.getElementsByClassName('score')[i].remove();
+                }
+        }*/
+        function removeGameButtons(){
+            document.getElementById('gamebox').remove();
+        }
         function removeButtons() {
             document.getElementById('solo').remove();
             document.getElementById('multi').remove();
-            for(let i = 0; i < document.getElementsByClassName('game-button').length; i++) {
-                document.getElementsByClassName('game-button')[i].style.display = "flex";
-            }
-            for(i = 0; i < document.getElementsByClassName('score').length; i++) {
-                document.getElementsByClassName('score')[i].style.display = "flex";
-            }
             gong.play();
+            setTimeout(function() {
+                appearGameButtons();
+            },1000);
         }
 
     </script>
