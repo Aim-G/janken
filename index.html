@@ -80,6 +80,8 @@
         const   bamb = new Audio ("./sounds/Bamboo.mp3");
         const   boi = new Audio ("./sounds/BOI.mp3");
         const   gong = new Audio ("./sounds/gong.mp3");
+        const   nein = new Audio ("./sounds/nein.mp3");
+        const   kabuki = new Audio ("./sounds/kabuki.mp3");
         /*function playAudio(".\sounds\Bamboo.mp3") {
         /*function playAudio(".\sounds\Bamboo.mp3") {
             new Audio(".\sounds\Bamboo.mp3").play();
@@ -94,6 +96,7 @@
         }
         function makeMove(choice) {
             if(choice == getComputerChoice()){
+                bamb.play();
                 return;
             }
             if (
@@ -109,7 +112,21 @@
             {
                 oppScore += 1;
                 document.getElementById("oppScore").innerText = oppScore;
-                bamb.play();
+                nein.play();
+            }
+            if (playerScore == 3)
+            {
+                kabuki.play();
+                setTimeout(function() {
+                location.reload();
+                }, 12000);
+            }
+            else if (oppScore == 3)
+            {
+                boi.play();
+                setTimeout(function() {
+                location.reload();
+                }, 3000);
             }
         }
         function getComputerChoice() {
