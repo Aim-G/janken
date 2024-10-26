@@ -84,6 +84,7 @@
         const   gong = new Audio ("./sounds/gong.mp3");
         const   nein = new Audio ("./sounds/nein.mp3");
         const   kabuki = new Audio ("./sounds/kabuki.mp3");
+        const   bonk = new Audio ("./sounds/bonk.mp3");
         
         
         class Player {
@@ -109,13 +110,15 @@
             ) {
                 playerScore += 1
                 document.getElementById("playerScore").innerText = playerScore;
-                boi.play();
+                if(playerScore < 3) 
+                    boi.play();
             }
             else 
             {
                 oppScore += 1;
                 document.getElementById("oppScore").innerText = oppScore;
-                nein.play();
+                if(oppScore < 3) 
+                    nein.play();
             }
             if (playerScore == 3)
             {
@@ -128,7 +131,7 @@
             else if (oppScore == 3)
             {
                 removeGameButtons();
-                boi.play();
+                bonk.play();
                 setTimeout(function() {
                 location.reload();
                 }, 3000);
