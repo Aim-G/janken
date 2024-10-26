@@ -10,12 +10,11 @@
             margin: 0;
             padding: 0;
         }
-    
         .flex-center {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Full viewport height */
+            height: 120vh; /* Full viewport height */
         }
         body {
             background-color: rgba(185, 154, 90, 0.575);
@@ -25,6 +24,16 @@
             user-select: none;
             
         }
+        .result {
+            margin: 10px;
+            font-size: 230px; /* Big font size for the score */
+            text-align: center;
+            margin-left: 670px;
+            margin-top: 300px;/* Center the text */
+            padding: 20px; /* Padding for spacing */ /* Light background color */
+            position: absolute; /* Pushes the score to the bottom */
+            display: flex;
+        }
         .score {
             margin: 10px;
             font-size: 230px; /* Big font size for the score */
@@ -32,6 +41,15 @@
             padding: 20px; /* Padding for spacing */ /* Light background color */
             position: absolute;
             margin-top: 550px; /* Pushes the score to the bottom */
+            display: none;
+        }
+        .move {
+            margin: 10px;
+            font-size: 100px; /* Big font size for the score */
+            text-align: center; /* Center the text */
+            padding: 20px; /* Padding for spacing */ /* Light background color */
+            position: absolute;
+            margin-bottom: 150px; /* Pushes the score to the bottom */
             display: none;
         }
         button {
@@ -65,7 +83,11 @@
                 soloGameStart();
                 ">Solo</button> -->
     <!-- object.onclick = function(){myScript}; -->
+    <div class = result></div>
      <div id = gamebox class = "flex-center">
+        <div class = "move" id = "playermove" style = "margin-right: 900px;"></div>
+        <div class = "move" id = "vs">VS</div>
+        <div class = "move" id = "oppmove"  style = "margin-left: 900px;"></div>
         <button id = "solo" onclick = removeButtons();>SOLO</button>
         <button id = "multi" onclick = removeButtons();>MULTIPLAYER</button>
         <button class = "game-button" id = "rock" onclick = "makeMove('rock')";>✊</button>
@@ -85,6 +107,7 @@
         const   nein = new Audio ("./sounds/nein.mp3");
         const   kabuki = new Audio ("./sounds/kabuki.mp3");
         const   bonk = new Audio ("./sounds/bonk.mp3");
+        const   yay = new Audio ("./sounds/yay.mp3");
         
         
         class Player {
@@ -99,14 +122,17 @@
             
         }
         function makeMove(choice) {
-            if(choice == getComputerChoice()){
+            oppChoice = getComputerChoice();
+            document.getElementById("playermove").innerText = choice.toUpperCase();
+            document.getElementById("oppmove").innerText = oppChoice.toUpperCase();
+            if(choice == oppChoice){
                 bamb.play();
                 return;
             }
             if (
-                (choice === 'rock' && getComputerChoice() === 'scissors') ||
-                (choice === 'paper' && getComputerChoice() === 'rock') ||
-                (choice === 'scissors' && getComputerChoice() === 'paper')
+                (choice === 'rock' && oppChoice === 'scissors') ||
+                (choice === 'paper' && oppChoice === 'rock') ||
+                (choice === 'scissors' && oppChoice === 'paper')
             ) {
                 playerScore += 1
                 document.getElementById("playerScore").innerText = playerScore;
@@ -122,15 +148,15 @@
             }
             if (playerScore == 3)
             {
-                removeGameButtons();
-                kabuki.play();
+                removeGameButtons('W');
+                yay.play();
                 setTimeout(function() {
                 location.reload();
-                }, 12000);
+                }, 3000);
             }
             else if (oppScore == 3)
             {
-                removeGameButtons();
+                removeGameButtons('L');
                 bonk.play();
                 setTimeout(function() {
                 location.reload();
@@ -146,6 +172,7 @@
             for(let i = 0; i < document.getElementsByClassName('game-button').length; i++) {
                         document.getElementsByClassName('game-button')[i].style.display = "flex";
                         document.getElementsByClassName('score')[i].style.display = "flex";
+                        document.getElementsByClassName('move')[i].style.display = "flex";
                     }
         }
         /*function removeGameButtons(){
@@ -156,8 +183,15 @@
                     document.getElementsByClassName('score')[i].remove();
                 }
         }*/
-        function removeGameButtons(){
+        function removeGameButtons(result){
             document.getElementById('gamebox').remove();
+            if (result == 'W'){
+                document.getElementsByClassName('result')[0].innerText = "WIN !"
+            }
+            else {
+                document.getElementsByClassName('result')[0].innerText = "LOSE !"
+            }
+            //document.getElementById('result').style.display = "flex";
         }
         function removeButtons() {
             document.getElementById('solo').remove();
