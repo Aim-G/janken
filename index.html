@@ -28,7 +28,7 @@
             margin: 10px;
             font-size: 230px; /* Big font size for the score */
             text-align: center;
-            margin-left: 670px;
+            margin-left: 620px;
             margin-top: 300px;/* Center the text */
             padding: 20px; /* Padding for spacing */ /* Light background color */
             position: absolute; /* Pushes the score to the bottom */
@@ -70,6 +70,17 @@
         .game-button {
             display: none;
         }
+        .online-button {
+            display : none;
+        }
+        .copy {
+            font-size: 16px;
+            padding: 5px 1px;
+            margin-left  : 350px;
+            margin-top : -60px;
+            position: absolute;
+            display: none;
+        }
 
     </style>
 </head>
@@ -83,13 +94,17 @@
                 soloGameStart();
                 ">Solo</button> -->
     <!-- object.onclick = function(){myScript}; -->
-    <div class = result></div>
+     <div class = result></div>
+     <div class = conn>OFFLINE</div>
+     <button class = copy onclick="copyID();">copy</button>
      <div id = gamebox class = "flex-center">
         <div class = "move" id = "playermove" style = "margin-right: 900px;"></div>
         <div class = "move" id = "vs">VS</div>
         <div class = "move" id = "oppmove"  style = "margin-left: 900px;"></div>
-        <button id = "solo" onclick = removeButtons();>SOLO</button>
-        <button id = "multi" onclick = removeButtons();>MULTIPLAYER</button>
+        <button id = "solo" onclick = startSoloGame();>SOLO</button>
+        <button id = "multi" onclick = startMultiGame();>MULTIPLAYER</button>
+        <button class = "online-button" id = "host" onclick = hostGame();>HOST</button>
+        <button class = "online-button" id = "join" onclick = startMultiGame();>JOIN</button>
         <button class = "game-button" id = "rock" onclick = "makeMove('rock')";>✊</button>
         <button class = "game-button" id = "paper" onclick = "makeMove('paper')";>✋</button>
         <button class = "game-button" id = "scissors" onclick = "makeMove('scissors')";>✌️</button>
@@ -101,6 +116,7 @@
     <script>
         let playerScore = 0;
         let oppScore = 0;
+        let idd = 0;
         const   bamb = new Audio ("./sounds/Bamboo.mp3");
         const   boi = new Audio ("./sounds/BOI.mp3");
         const   gong = new Audio ("./sounds/gong.mp3");
@@ -113,13 +129,34 @@
         class Player {
             
         }
-
         function startSoloGame() {
-            
+            document.getElementById('solo').remove();
+            document.getElementById('multi').remove();
+            gong.play();
+            setTimeout(function() {
+                appearGameButtons();
+            },1000);
         }
         
         function startMultiGame() {
-            
+            document.getElementById('solo').remove();
+            document.getElementById('multi').remove();
+            document.getElementsByClassName('online-button')[0].style.display = "flex";
+            document.getElementsByClassName('online-button')[1].style.display = "flex";
+
+        }
+        function hostGame() {
+            var peer = new Peer();
+            peer.on('open', function(id) {
+            document.getElementsByClassName('conn')[0].innerText = 'YOUR ID: ' + id;
+            idd = id;
+            document.getElementsByClassName('copy')[0].style.display = "flex";
+            document.getElementsByClassName('online-button')[0].style.display = "none";
+            document.getElementsByClassName('online-button')[1].style.display = "none";
+            });
+        }
+        function copyID(){
+            navigator.clipboard.writeText(idd);
         }
         function makeMove(choice) {
             oppChoice = getComputerChoice();
@@ -175,14 +212,6 @@
                         document.getElementsByClassName('move')[i].style.display = "flex";
                     }
         }
-        /*function removeGameButtons(){
-            document.getElementById('dash').remove();
-            document.getElementById('scissors').remove();
-            for(i = 0; i < document.getElementsByClassName('game-button').length; i++) {
-                    document.getElementsByClassName('game-button')[i].remove();
-                    document.getElementsByClassName('score')[i].remove();
-                }
-        }*/
         function removeGameButtons(result){
             document.getElementById('gamebox').remove();
             if (result == 'W'){
@@ -191,16 +220,6 @@
             else {
                 document.getElementsByClassName('result')[0].innerText = "LOSE !"
             }
-            //document.getElementById('result').style.display = "flex";
         }
-        function removeButtons() {
-            document.getElementById('solo').remove();
-            document.getElementById('multi').remove();
-            gong.play();
-            setTimeout(function() {
-                appearGameButtons();
-            },1000);
-        }
-
     </script>
 </body>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation Example</title>
+    <style>
+        /* Define animation using keyframes */
+        @keyframes slideRight {
+            from {
+                transform: translateX(0); /* Start at original position */
+            }
+            to {
+                transform: translateX(300px); /* Move 300px to the right */
+            }
+        }
+
+        /* Style for the box */
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            position: relative;
+            /* Apply the animation */
+            animation-name: slideRight;
+            animation-duration: 2s; /* Animation duration of 2 seconds */
+            animation-timing-function: ease-in-out; /* Smooth animation */
+            animation-iteration-count: infinite; /* Repeat animation forever */
+            animation-direction: alternate; /* Reverse direction each time */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated box -->
+    <div class="box"></div>
+
+</body>
+</html>
